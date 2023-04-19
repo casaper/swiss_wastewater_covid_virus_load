@@ -9,8 +9,7 @@ output:
     theme: yeti
     md_extensions: +footnotes
 ---
-
-```{r document_setup, echo=FALSE, message=FALSE}
+```{r libs, echo=FALSE, message=FALSE}
 library(readr)
 library(xts)
 library(zoo)
@@ -18,12 +17,15 @@ library(curl)
 library(xml2)
 library(scales)
 library(stringr)
-
+library(dplyr)
+library(knitr)
 Sys.setenv("VROOM_CONNECTION_SIZE" = 50 * 1024 * 1024)
+```
 
-CSVModelDocs = 'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-wastewaterdailyviralloaddata.md'
-CSVSourceWebsite = 'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/f8602049-4f86-4f02-a957-10791642283a'
-csvUrl = 'https://www.covid19.admin.ch/api/data/20230418-9fimp7v8/sources/COVID19Wastewater_vl.csv'
+```{r load_data, echo=FALSE, message=FALSE}
+CSVModelDocs <- 'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-wastewaterdailyviralloaddata.md'
+CSVSourceWebsite <- 'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/f8602049-4f86-4f02-a957-10791642283a'
+csvUrl <- 'https://www.covid19.admin.ch/api/data/20230418-9fimp7v8/sources/COVID19Wastewater_vl.csv'
 
 # Load the source CSV from remote with readr
 date_col <- col_date(format = "%Y-%m-%d")
@@ -33,7 +35,10 @@ data_col_types <-
 data_locale <- locale(date_names = "de")
 COVID19Wastewater_vl <-
   read_csv(csvUrl, col_types = data_col_types, locale = data_locale)
+```
 
+
+```{r plot_functions, echo=FALSE, message=FALSE}
 # create locality time series for geoRegion field
 locality_data_ts = function(geoRegion) {
   locality_data = COVID19Wastewater_vl[COVID19Wastewater_vl$geoRegion == geoRegion,]
@@ -119,8 +124,6 @@ More localities can be added to the `plot_localities` chunk, as demonstrated in 
 See: [Source of this document (R Markdown)](https://github.com/casaper/swiss_wastewater_covid_virus_load/blob/main/wastewater.Rmd)
 
 ```{r list_available_localities, echo=FALSE, message=FALSE}
-library(dplyr)
-library(knitr)
 localities <- COVID19Wastewater_vl %>% distinct(geoRegion,name,canton,pop)
 localities_pop_desc <- localities[order(localities$pop, decreasing=TRUE),]
 kable(localities_pop_desc)
