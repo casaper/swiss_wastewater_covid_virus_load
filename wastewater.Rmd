@@ -1,14 +1,19 @@
 ---
 title: "Swiss Covid Wastewater Virus Load Data"
 author: Kaspar V.
-date: 2023-04-19
 output:
   html_document:
     df_print: paged
     toc: true
     theme: yeti
     md_extensions: +footnotes
+    output_file: docs/index.html
+params:
+  generate_date: '2023-04-19'
+
 ---
+
+
 ```{r libs, echo=FALSE, message=FALSE}
 # install.packages(list("readr", "xts", "zoo", "curl", "xml2", "scales", "stringr", "dplyr", "knitr", "rvest"))
 
@@ -77,6 +82,7 @@ The original data was published by the Swiss Federal Office of Public Health.
 - [Data model documentation](`r CSVModelDocs`)
 - [Source document (CSV ~5.5MB)](`r csvUrl`)
 - [Source of this document (R Markdown)](https://github.com/casaper/swiss_wastewater_covid_virus_load/blob/main/wastewater.Rmd)
+- Generated at `r params$generate_date`
 
 ```{r plot_localities, echo=FALSE, message=FALSE}
 plot_locality(26101, 'Zürich (Werdhölzli)', 'ZH', 471000)
