@@ -27,25 +27,42 @@ concurrency:
 jobs:
   # Build job
   build:
-    runs-on: r-base:latest
+    runs-on: ubuntu-latest
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up R ${{ matrix.r-version }}
-        uses: r-lib/actions/setup-r@f57f1301a053485946083d7a45022b278929a78a
+      - name: Checkout repo
+        uses: actions/checkout@v3
         with:
-          r-version: 4.2.3
-      - name: Install dependencies
-        run: |
-          install.packages(c("remotes", "readr", "xts", "zoo", "curl", "xml2", "scales", "stringr", "dplyr", "knitr", "rvest"))
-          remotes::install_deps(dependencies = TRUE)
+          fetch-depth: 0
+
+      - uses: r-lib/actions/setup-pandoc@v2
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
+    
+      - name: Cache renv
+        uses: actions/cache@v3
+        with:
+          path: renv
+          key: renv-${{ hashFiles('**/*') }}
+          restore-keys: renv-
+      
+      - uses: r-lib/actions/setup-renv@v2
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v3
+    
       - name: Build with mdBook
         run: |
-          library(rmarkdown)
-          rmarkdown::render('wastewater.Rmd', 'html_document')
+          Rscript -e "library(rmarkdown); rmarkdown::render('wastewater.Rmd', 'html_document')"
           mv wastewater.html docs/index.html
+    
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:

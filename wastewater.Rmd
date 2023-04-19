@@ -10,7 +10,7 @@ output:
     md_extensions: +footnotes
 ---
 ```{r libs, echo=FALSE, message=FALSE}
-# install.packages(list('readr', 'xts', 'zoo', 'curl', 'xml2', 'scales', 'stringr', 'dplyr', 'knitr', 'rvest'))
+# install.packages(list("readr", "xts", "zoo", "curl", "xml2", "scales", "stringr", "dplyr", "knitr", "rvest"))
 
 library(readr)
 library(xts)
