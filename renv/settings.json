@@ -1,12 +1,18 @@
 {
   "bioconductor.version": null,
-  "external.libraries": [],
-  "ignored.packages": [],
-  "package.dependency.fields": [
-    "Imports",
-    "Depends",
-    "LinkingTo"
+  "external.libraries": [
+    "readr",
+    "xts",
+    "zoo",
+    "curl",
+    "xml2",
+    "scales",
+    "stringr",
+    "dplyr",
+    "knitr"
   ],
+  "ignored.packages": [],
+  "package.dependency.fields": ["Imports", "Depends", "LinkingTo"],
   "r.version": null,
   "snapshot.type": "implicit",
   "use.cache": true,
