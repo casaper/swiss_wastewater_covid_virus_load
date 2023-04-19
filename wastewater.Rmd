@@ -10,6 +10,8 @@ output:
     md_extensions: +footnotes
 ---
 ```{r libs, echo=FALSE, message=FALSE}
+# install.packages(list('readr', 'xts', 'zoo', 'curl', 'xml2', 'scales', 'stringr', 'dplyr', 'knitr', 'rvest'))
+
 library(readr)
 library(xts)
 library(zoo)
@@ -29,9 +31,6 @@ CSVSourceWebsite <- 'https://opendata.swiss/de/dataset/covid-19-schweiz/resource
 html_form_page <- CSVSourceWebsite %>% read_html()
 links <- html_form_page %>% html_elements('a[data-format="CSV"]') %>% html_attr("href")
 csvUrl <- links[1]
-
-
-# csvUrl <- 'https://www.covid19.admin.ch/api/data/20230418-9fimp7v8/sources/COVID19Wastewater_vl.csv'
 ```
 
 ```{r load_data, echo=FALSE, message=FALSE}
