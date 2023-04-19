@@ -19,14 +19,22 @@ library(scales)
 library(stringr)
 library(dplyr)
 library(knitr)
+library(rvest)
 Sys.setenv("VROOM_CONNECTION_SIZE" = 50 * 1024 * 1024)
+CSVModelDocs <- 'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-wastewaterdailyviralloaddata.md'
+CSVSourceWebsite <- 'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/f8602049-4f86-4f02-a957-10791642283a'
+```
+
+```{r get_url, echo=FALSE, message=FALSE}
+html_form_page <- CSVSourceWebsite %>% read_html()
+links <- html_form_page %>% html_elements('a[data-format="CSV"]') %>% html_attr("href")
+csvUrl <- links[1]
+
+
+# csvUrl <- 'https://www.covid19.admin.ch/api/data/20230418-9fimp7v8/sources/COVID19Wastewater_vl.csv'
 ```
 
 ```{r load_data, echo=FALSE, message=FALSE}
-CSVModelDocs <- 'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-wastewaterdailyviralloaddata.md'
-CSVSourceWebsite <- 'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/f8602049-4f86-4f02-a957-10791642283a'
-csvUrl <- 'https://www.covid19.admin.ch/api/data/20230418-9fimp7v8/sources/COVID19Wastewater_vl.csv'
-
 # Load the source CSV from remote with readr
 date_col <- col_date(format = "%Y-%m-%d")
 version_col <- col_datetime(format = "%Y-%m-%d_%H-%M-%S")
