@@ -1,0 +1,78 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+```{r echo=FALSE, message=FALSE}
+library(readr)
+library(knitr)
+library(xts)
+library(zoo)
+library(curl)
+library(xml2)
+
+Sys.setenv("VROOM_CONNECTION_SIZE" = 50 * 1024 * 1024)
+
+COVID19Wastewater_vl <-
+  read_csv(
+    "https://www.covid19.admin.ch/api/data/20230418-9fimp7v8/sources/COVID19Wastewater_vl.csv",
+    col_types = cols(
+      geoRegion = col_character(),
+      date = col_date(format = "%Y-%m-%d"),
+      version = col_datetime(format = "%Y-%m-%d_%H-%M-%S")
+    ),
+    locale = locale(date_names = "de")
+  )
+
+plot_locality <- function(geoRegion, nameMain) {
+  locality_data = COVID19Wastewater_vl[COVID19Wastewater_vl$geoRegion == geoRegion, ]
+  locality_data_ts <-
+    xts(locality_data$vl_percentile_mean7d, order.by = locality_data$date)
+  plot(locality_data_ts,
+      main = nameMain,
+      xlab = "Date",
+      ylab = "Percentile mean 7d")
+
+}
+```
+
+```{r echo=FALSE, message=FALSE}
+plot_locality('26101', "Zürich (Werdhölzli) ZH - 471'000 Pop")
+plot_locality('664301', "Aire GE - 451'771 Pop")
+plot_locality('270101', "Basel BS - 273'075 Pop")
+plot_locality('558600', "Lausanne (Vidy) VD - 247'824 Pop")
+plot_locality('35100', "Region Bern BE - 224'557 Pop")
+plot_locality('102400', "Buholz (Real) LU - 183'511 Pop")
+plot_locality('170200', "Cham (Schoenau) ZG - 146'942 Pop")
+plot_locality('23001', "Winterthur ZH - 140'403 Pop")
+plot_locality('94400', "Thunersee BE - 124'550 Pop")
+plot_locality('515100', "Lugano TI - 124'000 Pop")
+plot_locality('296300', "Ramsen (Bibertal-Hegau) SH - 100'338 Pop")
+plot_locality('253400', "Zuchwil (Soloth.-Emme) SO - 95'793 Pop")
+plot_locality('73300', "Biel BE - 85'389 Pop")
+plot_locality('24301', "Dietikon ZH - 83'367 Pop")
+plot_locality('276600', "Birs BL - 83'312 Pop")
+plot_locality('663801', "Satigny/Bois-de-Bay GE - 79'577 Pop")
+plot_locality('400100', "Aarau AG - 78'255 Pop")
+plot_locality('36200', "Worblental BE - 71'636 Pop")
+plot_locality('323700', "Altenrhein SG - 64'000 Pop")
+plot_locality('66700', "Laupen BE - 62'000 Pop")
+plot_locality('404200', "Baden AG - 59'560 Pop")
+plot_locality('320401', "St.Gallen (Hofen) SG - 57'031 Pop")
+plot_locality('293700', "Neuhausen A/Rhf. (Roeti) SH - 56'967 Pop")
+plot_locality('390101', "Chur GR - 55'000 Pop")
+plot_locality('420300', "Lenzburg AG - 54'568 Pop")
+plot_locality('250100', "Winznau (Zv Olten) SO - 54'540 Pop")
+plot_locality('589000', "Vevey (Aviron) VD - 53'864 Pop")
+plot_locality('500200', "Bellinzona (Giubiasco) TI - 53'209 Pop")
+plot_locality('511302', "Locarno (Foce Maggia) TI - 50'781 Pop")
+plot_locality('160200', "Glarnerland GL - 49'644 Pop")
+plot_locality('254600', "Grenchen (Buerenamt) SO - 46'563 Pop")
+plot_locality('412300', "Brugg AG - 46'250 Pop")
+plot_locality('219600', "Fribourg (Aele) FR - 44'211 Pop")
+plot_locality('8901', "Niederglatt (Fischb.-Gl.) ZH - 43'596 Pop")
+plot_locality('588600', "Montreux/Pierrier VD - 41'383 Pop")
+plot_locality('19801', "Uster (Jungholz) ZH - 41'303 Pop")
+plot_locality('323100', "Au (Rosenbergsau) SG - 41'281 Pop")
+```
+
