@@ -1,80 +1,133 @@
 ---
-title: "R Notebook"
+title: "Swiss Covid Wastewater Virus Load Data"
 output:
   html_document:
     df_print: paged
+    toc: true
+    theme: united
 ---
 
-```{r echo=FALSE, message=FALSE}
+```{r document_setup, echo=FALSE, message=FALSE}
 library(readr)
-library(knitr)
 library(xts)
 library(zoo)
 library(curl)
 library(xml2)
+library(scales)
+library(stringr)
 
 Sys.setenv("VROOM_CONNECTION_SIZE" = 50 * 1024 * 1024)
 
+CSVModelDocs = 'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-wastewaterdailyviralloaddata.md'
+CSVSourceWebsite = 'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/f8602049-4f86-4f02-a957-10791642283a'
+csvUrl = 'https://www.covid19.admin.ch/api/data/20230418-9fimp7v8/sources/COVID19Wastewater_vl.csv'
+
+# Load the source CSV from remote with readr
+date_col <- col_date(format = "%Y-%m-%d")
+version_col <- col_datetime(format = "%Y-%m-%d_%H-%M-%S")
+data_col_types <-
+  cols(geoRegion = col_character(), date = date_col, version = version_col)
+data_locale <- locale(date_names = "de")
 COVID19Wastewater_vl <-
-  read_csv(
-    "https://www.covid19.admin.ch/api/data/20230418-9fimp7v8/sources/COVID19Wastewater_vl.csv",
-    col_types = cols(
-      geoRegion = col_character(),
-      date = col_date(format = "%Y-%m-%d"),
-      version = col_datetime(format = "%Y-%m-%d_%H-%M-%S")
-    ),
-    locale = locale(date_names = "de")
-  )
+  read_csv(csvUrl, col_types = data_col_types, locale = data_locale)
 
-plot_locality <- function(geoRegion, nameMain) {
-  locality_data = COVID19Wastewater_vl[COVID19Wastewater_vl$geoRegion == geoRegion, ]
-  locality_data_ts <-
+# create locality time series for geoRegion field
+locality_data_ts = function(geoRegion) {
+  locality_data = COVID19Wastewater_vl[COVID19Wastewater_vl$geoRegion == geoRegion,]
+  return <-
     xts(locality_data$vl_percentile_mean7d, order.by = locality_data$date)
-  plot(locality_data_ts,
-      main = nameMain,
-      xlab = "Date",
-      ylab = "Percentile mean 7d")
+}
 
+# Format number of population
+pop_format <- scales::label_comma(accuracy = .1, big.mark = "'", decimal.mark = ".")
+
+plot_locality <- function(geoRegion, name, canton, population) {
+  pop <- pop_format(as.double(population))
+  plot(
+    locality_data_ts(as.character(geoRegion)),
+    main = str_interp("${name} ${canton} – ${pop} Pop."),
+    xlab = 'Date',
+    ylab = 'Percentile mean 7d'
+  )
 }
 ```
 
-```{r echo=FALSE, message=FALSE}
-plot_locality('26101', "Zürich (Werdhölzli) ZH - 471'000 Pop")
-plot_locality('664301', "Aire GE - 451'771 Pop")
-plot_locality('270101', "Basel BS - 273'075 Pop")
-plot_locality('558600', "Lausanne (Vidy) VD - 247'824 Pop")
-plot_locality('35100', "Region Bern BE - 224'557 Pop")
-plot_locality('102400', "Buholz (Real) LU - 183'511 Pop")
-plot_locality('170200', "Cham (Schoenau) ZG - 146'942 Pop")
-plot_locality('23001', "Winterthur ZH - 140'403 Pop")
-plot_locality('94400', "Thunersee BE - 124'550 Pop")
-plot_locality('515100', "Lugano TI - 124'000 Pop")
-plot_locality('296300', "Ramsen (Bibertal-Hegau) SH - 100'338 Pop")
-plot_locality('253400', "Zuchwil (Soloth.-Emme) SO - 95'793 Pop")
-plot_locality('73300', "Biel BE - 85'389 Pop")
-plot_locality('24301', "Dietikon ZH - 83'367 Pop")
-plot_locality('276600', "Birs BL - 83'312 Pop")
-plot_locality('663801', "Satigny/Bois-de-Bay GE - 79'577 Pop")
-plot_locality('400100', "Aarau AG - 78'255 Pop")
-plot_locality('36200', "Worblental BE - 71'636 Pop")
-plot_locality('323700', "Altenrhein SG - 64'000 Pop")
-plot_locality('66700', "Laupen BE - 62'000 Pop")
-plot_locality('404200', "Baden AG - 59'560 Pop")
-plot_locality('320401', "St.Gallen (Hofen) SG - 57'031 Pop")
-plot_locality('293700', "Neuhausen A/Rhf. (Roeti) SH - 56'967 Pop")
-plot_locality('390101', "Chur GR - 55'000 Pop")
-plot_locality('420300', "Lenzburg AG - 54'568 Pop")
-plot_locality('250100', "Winznau (Zv Olten) SO - 54'540 Pop")
-plot_locality('589000', "Vevey (Aviron) VD - 53'864 Pop")
-plot_locality('500200', "Bellinzona (Giubiasco) TI - 53'209 Pop")
-plot_locality('511302', "Locarno (Foce Maggia) TI - 50'781 Pop")
-plot_locality('160200', "Glarnerland GL - 49'644 Pop")
-plot_locality('254600', "Grenchen (Buerenamt) SO - 46'563 Pop")
-plot_locality('412300', "Brugg AG - 46'250 Pop")
-plot_locality('219600', "Fribourg (Aele) FR - 44'211 Pop")
-plot_locality('8901', "Niederglatt (Fischb.-Gl.) ZH - 43'596 Pop")
-plot_locality('588600', "Montreux/Pierrier VD - 41'383 Pop")
-plot_locality('19801', "Uster (Jungholz) ZH - 41'303 Pop")
-plot_locality('323100', "Au (Rosenbergsau) SG - 41'281 Pop")
+## Information
+
+This document is a personal throw together to get some personal insight into the COVID-19 wastewater virus load data.  
+The original data was published by the Swiss Federal Office of Public Health.
+
+**Date of document generation: 2023-04-19**
+
+- [Covid-⁠19 – Viruslast im Abwasser – Bundesamt für Gesundheit BAG](https://www.covid19.admin.ch/de/epidemiologic/waste-water)
+- [Data source website - opendata.swiss](`r CSVSourceWebsite`)  
+- [Data model documentation](`r CSVModelDocs`)
+- [Source document (CSV ~5.5MB)](`r csvUrl`)
+- [Source of this document (R Markdown)](https://github.com/casaper/swiss_wastewater_covid_virus_load/blob/main/wastewater.Rmd)
+
+```{r plot_localities, echo=FALSE, message=FALSE}
+plot_locality(26101, 'Zürich (Werdhölzli)', 'ZH', 471000)
+plot_locality(664301, 'Aire', 'GE', 451771)
+plot_locality(270101, 'Basel', 'BS', 273075)
+plot_locality(558600, 'Lausanne (Vidy)', 'VD', 247824)
+plot_locality(35100, 'Region Bern', 'BE', 224557)
+plot_locality(102400, 'Buholz (Real)', 'LU', 183511)
+plot_locality(170200, 'Cham (Schoenau)', 'ZG', 146942)
+plot_locality(23001, 'Winterthur', 'ZH', 140403)
+plot_locality(94400, 'Thunersee', 'BE', 124550)
+plot_locality(515100, 'Lugano', 'TI', 124000)
+plot_locality(296300, 'Ramsen (Bibertal-Hegau)', 'SH', 100338)
+plot_locality(253400, 'Zuchwil (Soloth.-Emme)', 'SO', 95793)
+plot_locality(73300, 'Biel', 'BE', 85389)
+plot_locality(24301, 'Dietikon', 'ZH', 83367)
+plot_locality(276600, 'Birs', 'BL', 83312)
+plot_locality(663801, 'Satigny/Bois-de-Bay', 'GE', 79577)
+plot_locality(400100, 'Aarau', 'AG', 78255)
+plot_locality(36200, 'Worblental', 'BE', 71636)
+plot_locality(323700, 'Altenrhein', 'SG', 64000)
+plot_locality(66700, 'Laupen', 'BE', 62000)
+plot_locality(404200, 'Baden', 'AG', 59560)
+plot_locality(320401, 'St.Gallen (Hofen)', 'SG', 57031)
+plot_locality(293700, 'Neuhausen A/Rhf. (Roeti)', 'SH', 56967)
+plot_locality(390101, 'Chur', 'GR', 55000)
+plot_locality(420300, 'Lenzburg', 'AG', 54568)
+plot_locality(250100, 'Winznau (Zv Olten)', 'SO', 54540)
+plot_locality(589000, 'Vevey (Aviron)', 'VD', 53864)
+plot_locality(500200, 'Bellinzona (Giubiasco)', 'TI', 53209)
+plot_locality(511302, 'Locarno (Foce Maggia)', 'TI', 50781)
+plot_locality(160200, 'Glarnerland', 'GL', 49644)
+plot_locality(254600, 'Grenchen (Buerenamt)', 'SO', 46563)
+plot_locality(412300, 'Brugg', 'AG', 46250)
+plot_locality(219600, 'Fribourg (Aele)', 'FR', 44211)
+plot_locality(8901, 'Niederglatt (Fischb.-Gl.)', 'ZH', 43596)
+plot_locality(588600, 'Montreux/Pierrier', 'VD', 41383)
+plot_locality(19801, 'Uster (Jungholz)', 'ZH', 41303)
+plot_locality(323100, 'Au (Rosenbergsau)', 'SG', 41281)
+plot_locality(32101,	'Aarwangen (Zala)',	'BE',	40845)
+plot_locality(645800,	'Neuchatel',	'NE',	40697)
+plot_locality(613600,	'Martigny',	'VS',	39643)
+plot_locality(19101,	'Dübendorf (Ika Neugut)',	'ZH',	39622)
+plot_locality(320302,	'St.Gallen (Au)',	'SG',	37876)
 ```
 
+## Available Localities
+
+Sorted by wastewater facility population reach.  
+More localities can be added to the `plot_localities` chunk, as demonstrated in the already present plots.
+
+See: [Source of this document (R Markdown)](https://github.com/casaper/swiss_wastewater_covid_virus_load/blob/main/wastewater.Rmd)
+
+```{r list_available_localities, echo=FALSE, message=FALSE}
+library(dplyr)
+library(knitr)
+localities <- COVID19Wastewater_vl %>% distinct(geoRegion,name,canton,pop)
+localities_pop_desc <- localities[order(localities$pop, decreasing=TRUE),]
+kable(localities_pop_desc)
+```
+
+## Contribute
+
+My knowledge of R is extremely limited.  
+I've chunked this document together quickly, and I may have done some ugly things for your R experts taste.
+
+Contributions by someone with more R expertise than myself (likely anyone with R knowledge) are, of course, highly welcome.
