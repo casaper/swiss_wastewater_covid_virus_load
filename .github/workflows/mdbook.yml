@@ -60,8 +60,8 @@ jobs:
     
       - name: Build with mdBook
         run: |
-          Rscript -e "library(rmarkdown); rmarkdown::render('wastewater.Rmd', 'html_document')"
-          mv wastewater.html docs/index.html
+          mkdir -p docs
+          Rscript -e "library(rmarkdown); rmarkdown::render('wastewater.Rmd', 'html_document', 'docs/index.html')"
     
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
