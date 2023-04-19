@@ -77,7 +77,7 @@ localities <- get_localities(COVID19Wastewater_vl)
 ```
 
 
-```{r plot_functions, echo=FALSE, message=FALSE}
+```{r, echo=FALSE, message=FALSE}
 plot_locality = function(geoRegion, name, canton, population) {
   locality_data <- get_locality_data(COVID19Wastewater_vl, geoRegion)
   plot_main <- str_interp("${name} ${canton} – ${population} P.")
@@ -97,127 +97,727 @@ The original data was published by the Swiss Federal Office of Public Health.
 - [Source of this document (R Markdown)](https://github.com/casaper/swiss_wastewater_covid_virus_load/blob/main/wastewater.Rmd)
 - Generated at `r params$generate_date`
 
+## Wastewater Localities
 
-```{r plot_localities, echo=FALSE, message=FALSE}
+
+
+### Werdhölzli ZH – 471'000 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(26101, 'Werdhölzli', 'ZH', 471000)
+```
+
+### Aire GE – 451'771 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(664301, 'Aire', 'GE', 451771)
+```
+
+### Basel BS – 273'075 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(270101, 'Basel', 'BS', 273075)
+```
+
+### Lausanne (Vidy) VD – 247'824 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(558600, 'Lausanne (Vidy)', 'VD', 247824)
+```
+
+### Region Bern BE – 224'557 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(35100, 'Region Bern', 'BE', 224557)
+```
+
+### Buholz (Real) LU – 183'511 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(102400, 'Buholz (Real)', 'LU', 183511)
+```
+
+### Cham (Schoenau) ZG – 146'942 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(170200, 'Cham (Schoenau)', 'ZG', 146942)
+```
+
+### Winterthur ZH – 140'403 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(23001, 'Winterthur', 'ZH', 140403)
+```
+
+### Thunersee BE – 124'550 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(94400, 'Thunersee', 'BE', 124550)
+```
+
+### Lugano TI – 124'000 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(515100, 'Lugano', 'TI', 124000)
+```
+
+### Ramsen (Bibertal-Hegau) SH – 100'338 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(296300, 'Ramsen (Bibertal-Hegau)', 'SH', 100338)
+```
+
+### Zuchwil (Soloth.-Emme) SO – 95'793 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(253400, 'Zuchwil (Soloth.-Emme)', 'SO', 95793)
+```
+
+### Biel BE – 85'389 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(73300, 'Biel', 'BE', 85389)
+```
+
+### Dietikon (Limeco) ZH – 83'367 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(24301, 'Dietikon (Limeco)', 'ZH', 83367)
+```
+
+### Birs BL – 83'312 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(276600, 'Birs', 'BL', 83312)
+```
+
+### Satigny/Bois-de-Bay GE – 79'577 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(663801, 'Satigny/Bois-de-Bay', 'GE', 79577)
+```
+
+### Aarau AG – 78'255 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(400100, 'Aarau', 'AG', 78255)
+```
+
+### Worblental BE – 71'636 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(36200, 'Worblental', 'BE', 71636)
+```
+
+### Altenrhein SG – 64'000 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(323700, 'Altenrhein', 'SG', 64000)
+```
+
+### Laupen BE – 62'000 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(66700, 'Laupen', 'BE', 62000)
+```
+
+### Baden AG – 59'560 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(404200, 'Baden', 'AG', 59560)
+```
+
+### St.Gallen (Hofen) SG – 57'031 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(320401, 'St.Gallen (Hofen)', 'SG', 57031)
+```
+
+### Neuhausen A/Rhf. (Roeti) SH – 56'967 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(293700, 'Neuhausen A/Rhf. (Roeti)', 'SH', 56967)
+```
+
+### Chur GR – 55'000 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(390101, 'Chur', 'GR', 55000)
+```
+
+### Lenzburg AG – 54'568 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(420300, 'Lenzburg', 'AG', 54568)
+```
+
+### Winznau (Zv Olten) SO – 54'540 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(250100, 'Winznau (Zv Olten)', 'SO', 54540)
+```
+
+### Vevey (Aviron) VD – 53'864 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(589000, 'Vevey (Aviron)', 'VD', 53864)
+```
+
+### Bellinzona (Giubiasco) TI – 53'209 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(500200, 'Bellinzona (Giubiasco)', 'TI', 53209)
+```
+
+### Thonex/Villette GE – 51'028 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(664000, 'Thonex/Villette', 'GE', 51028)
+```
+
+### Locarno (Foce Maggia) TI – 50'781 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(511302, 'Locarno (Foce Maggia)', 'TI', 50781)
+```
+
+### Glarnerland GL – 49'644 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(160200, 'Glarnerland', 'GL', 49644)
+```
+
+### Grenchen (Buerenamt) SO – 46'563 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(254600, 'Grenchen (Buerenamt)', 'SO', 46563)
+```
+
+### Brugg AG – 46'250 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(412300, 'Brugg', 'AG', 46250)
+```
+
+### Fribourg (Aele) FR – 44'211 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(219600, 'Fribourg (Aele)', 'FR', 44211)
+```
+
+### Niederglatt (Fischb.-Gl.) ZH – 43'596 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(8901, 'Niederglatt (Fischb.-Gl.)', 'ZH', 43596)
+```
+
+### Montreux/Pierrier VD – 41'383 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(588600, 'Montreux/Pierrier', 'VD', 41383)
+```
+
+### Uster (Jungholz) ZH – 41'303 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(19801, 'Uster (Jungholz)', 'ZH', 41303)
+```
+
+### Au (Rosenbergsau) SG – 41'281 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(323100, 'Au (Rosenbergsau)', 'SG', 41281)
+```
+
+### Aarwangen (Zala) BE – 40'845 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(32101, 'Aarwangen (Zala)', 'BE', 40845)
+```
+
+### Neuchatel NE – 40'697 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(645800, 'Neuchatel', 'NE', 40697)
+```
+
+### Martigny VS – 39'643 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(613600, 'Martigny', 'VS', 39643)
+```
+
+### Dübendorf (Ika Neugut) ZH – 39'622 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(19101, 'Dübendorf (Ika Neugut)', 'ZH', 39622)
+```
+
+### 000', 'Liechtenstein FL – 39'315 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality('100000', 'Liechtenstein', 'FL', 39315)
+```
+
+### Morges VD – 39'126 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(564200, 'Morges', 'VD', 39126)
+```
+
+### St.Gallen (Au) SG – 37'876 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(320302, 'St.Gallen (Au)', 'SG', 37876)
+```
+
+### Ergolz 2 BL – 37'565 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(282500, 'Ergolz 2', 'BL', 37565)
+```
+
+### Delemont (Sede) JU – 36'484 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(670900, 'Delemont (Sede)', 'JU', 36484)
+```
+
+### Burgdorf BE – 36'465 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(40100, 'Burgdorf', 'BE', 36465)
+```
+
+### Frauenfeld TG – 36'369 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(456600, 'Frauenfeld', 'TG', 36369)
+```
+
+### Lyss BE – 36'358 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(30600, 'Lyss', 'BE', 36358)
+```
+
+### Gland (Apec) VD – 36'034 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(572100, 'Gland (Apec)', 'VD', 36034)
+```
+
+### Sion/Chateauneuf VS – 35'632 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(626601, 'Sion/Chateauneuf', 'VS', 35632)
+```
+
+### Bülach ZH – 35'612 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(5301, 'Bülach', 'ZH', 35612)
+```
+
+### Zofingen AG – 35'577 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(428000, 'Zofingen', 'AG', 35577)
+```
+
+### Yverdon VD – 35'462 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(593800, 'Yverdon', 'VD', 35462)
+```
+
+### La-Chaux-de-Fonds NE – 35'360 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(642100, 'La-Chaux-de-Fonds', 'NE', 35360)
+```
+
+### Vuippens (Ais) FR – 34'647 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(216100, 'Vuippens (Ais)', 'FR', 34647)
+```
+
+### Altdorf UR – 33'940 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(120101, 'Altdorf', 'UR', 33940)
+```
+
+### Moossee-Urtenenbach BE – 33'844 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(41100, 'Moossee-Urtenenbach', 'BE', 33844)
+```
+
+### Sierre/Noes VS – 32'480 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(624801, 'Sierre/Noes', 'VS', 32480)
+```
+
+### Wohlen AG – 31'992 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(408200, 'Wohlen', 'AG', 31992)
+```
+
+### Wetzikon (Flos) ZH – 31'419 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(12101, 'Wetzikon (Flos)', 'ZH', 31419)
+```
+
+### Weinfelden (Mittelthurgau) TG – 31'342 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(494600, 'Weinfelden (Mittelthurgau)', 'TG', 31342)
+```
+
+### Schwyz SZ – 31'164 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(137200, 'Schwyz', 'SZ', 31164)
+```
+
+### Aarburg AG – 30'884 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(427100, 'Aarburg', 'AG', 30884)
+```
+
+### Steinach (Morgental) SG – 30'710 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(321700, 'Steinach (Morgental)', 'SG', 30710)
+```
+
+### Alpnach (Sarneraatal) OW – 30'657 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(140100, 'Alpnach (Sarneraatal)', 'OW', 30657)
+```
+
+### Flawil (Oberglatt) SG – 30'378 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(340200, 'Flawil (Oberglatt)', 'SG', 30378)
+```
+
+### Affoltern am Albis ZH – 30'226 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(201, 'Affoltern am Albis', 'ZH', 30226)
+```
+
+### Hoefe SZ – 29'624 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(132200, 'Hoefe', 'SZ', 29624)
+```
+
+### Untermarch SZ – 29'470 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(134400, 'Untermarch', 'SZ', 29470)
+```
+
+### Mendrisio (Rancate) TI – 29'392 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(526200, 'Mendrisio (Rancate)', 'TI', 29392)
+```
+
+### Ergolz 1 BL – 29'168 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(286100, 'Ergolz 1', 'BL', 29168)
+```
+
+### Rontal LU – 28'771 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(106500, 'Rontal', 'LU', 28771)
+```
+
+### Brig-Glis (Briglina) VS – 28'678 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(600200, 'Brig-Glis (Briglina)', 'VS', 28678)
+```
+
+### Rapperswil-Jona SG – 28'168 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(333500, 'Rapperswil-Jona', 'SG', 28168)
+```
+
+### Interlaken BE – 27'945 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(59300, 'Interlaken', 'BE', 27945)
+```
+
+### Colombier (La Saunerie) NE – 27'582 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(640600, 'Colombier (La Saunerie)', 'NE', 27582)
+```
+
+### Horgen ZH – 26'952 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(13301, 'Horgen', 'ZH', 26952)
+```
+
+### Chiasso (Vacallo) TI – 26'638 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(526800, 'Chiasso (Vacallo)', 'TI', 26638)
+```
+
+### Meilen (Rorguet) ZH – 26'447 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(15601, 'Meilen (Rorguet)', 'ZH', 26447)
+```
+
+### Wil SG – 26'295 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(342500, 'Wil', 'SG', 26295)
+```
+
+### Pratteln/Rhein BL – 26'286 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(283100, 'Pratteln/Rhein', 'BL', 26286)
+```
+
+### Nyon VD – 25'753 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(572400, 'Nyon', 'VD', 25753)
+```
+
+### Mittl. Emmental BE – 25'733 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(95600, 'Mittl. Emmental', 'BE', 25733)
+```
+
+### Kaisten AG – 25'354 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(416900, 'Kaisten', 'AG', 25354)
+```
+
+### Birsig BL – 24'943 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(277500, 'Birsig', 'BL', 24943)
+```
+
+### Buchs SG – 24'844 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(327100, 'Buchs', 'SG', 24844)
+```
+
+### Locarno (Foce Ticino) TI – 24'516 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(511301, 'Locarno (Foce Ticino)', 'TI', 24516)
+```
+
+### Zwingen (Laufental-L-Tal) BL – 24'357 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(279300, 'Zwingen (Laufental-L-Tal)', 'BL', 24357)
+```
+
+### Reinach AG – 23'817 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(414100, 'Reinach', 'AG', 23817)
+```
+
+### Hefenhofen (Aachtal, Moos) TG – 23'074 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(441600, 'Hefenhofen (Aachtal, Moos)', 'TG', 23074)
+```
+
+### Bremgarten AG – 22'613 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(406300, 'Bremgarten', 'AG', 22613)
+```
+
+### Commugny VD – 22'575 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(571100, 'Commugny', 'VD', 22575)
+```
+
+### Stans (Rotzwinkel) NW – 21'214 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(150900, 'Stans (Rotzwinkel)', 'NW', 21214)
+```
+
+### Illnau-Effretikon ZH – 18'921 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(17401, 'Illnau-Effretikon', 'ZH', 18921)
+```
+
+### Landquart GR – 17'054 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(395501, 'Landquart', 'GR', 17054)
+```
+
+### Herisau (Bachwis) AR – 16'500 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(300102, 'Herisau (Bachwis)', 'AR', 16500)
+```
+
+### Porrentruy (Sepe) JU – 16'500 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(680000, 'Porrentruy (Sepe)', 'JU', 16500)
+```
+
+### S-chanf (Oberengadin) GR – 15'056 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(378802, 'S-chanf (Oberengadin)', 'GR', 15056)
+```
+
+### Hallau (Klettgau) SH – 14'795 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(297100, 'Hallau (Klettgau)', 'SH', 14795)
+```
+
+### Flums (Seez) SG – 12'448 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(329200, 'Flums (Seez)', 'SG', 12448)
+```
+
+### Bad Ragaz SG – 12'007 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(329100, 'Bad Ragaz', 'SG', 12007)
+```
+
+### Appenzell (Boedeli) AI – 11'877 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(310100, 'Appenzell (Boedeli)', 'AI', 11877)
+```
+
+### Cazis (Waldau) GR – 10'963 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(366101, 'Cazis (Waldau)', 'GR', 10963)
+```
+
+### Davos (Gadenstatt) GR – 9'706 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(385102, 'Davos (Gadenstatt)', 'GR', 9706)
+```
+
+### Saanen BE – 9'253 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(84300, 'Saanen', 'BE', 9253)
+```
+
+### Seewis (Vorderes Prättigau) GR – 8'003 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(397201, 'Seewis (Vorderes Prättigau)', 'GR', 8003)
+```
+
+### Schluein (Gruob) GR – 7'823 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(358201, 'Schluein (Gruob)', 'GR', 7823)
+```
+
+### Bagnes-Le Châble VS – 7'713 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(603102, 'Bagnes-Le Châble', 'VS', 7713)
+```
+
+### Andelfingen ZH – 7'150 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(3001, 'Andelfingen', 'ZH', 7150)
+```
+
+### Zermatt VS – 5'507 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(630000, 'Zermatt', 'VS', 5507)
+```
+
+### Goms VS – 4'193 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(605700, 'Goms', 'VS', 4193)
+```
+
+### Grindelwald BE – 4'153 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(57600, 'Grindelwald', 'BE', 4153)
+```
+
+### Engelberg OW – 4'053 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(140200, 'Engelberg', 'OW', 4053)
+```
+
+### Scuol (Sot Ruinas) GR – 3'473 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(376201, 'Scuol (Sot Ruinas)', 'GR', 3473)
+```
+
+### Poschiavo (Li Geri) GR – 3'358 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(356101, 'Poschiavo (Li Geri)', 'GR', 3358)
+```
+
+### Klosters (Gulfia) GR – 3'155 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(387101, 'Klosters (Gulfia)', 'GR', 3155)
+```
+
+### Lauterbrunnen BE – 2'553 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(58400, 'Lauterbrunnen', 'BE', 2553)
+```
+
+### Arosa GR – 2'049 Population
+
+```{r, echo=FALSE, message=FALSE}
 plot_locality(392101, 'Arosa', 'GR', 2049)
 ```
 
