@@ -38,7 +38,7 @@ load_COVID19Wastewater_vl <- function(csv_url) {
         data_expected = col_logical()
       ),
       locale = data_locale
-    )
+    ) %>% dplyr::filter(vl_percentile_mean7d != 'NA' | vl_percentile_7d != 'NA' | vl_percentile_mean7d_diff_pp != 'NA')
 }
 
 get_localities <- function(COVID19Wastewater_vl) {
