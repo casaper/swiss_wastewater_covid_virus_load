@@ -226,14 +226,3 @@ plot_locality(392101, 'Arosa', 'GR', 2049)
 ```{r list_available_localities, echo=FALSE, message=FALSE}
 paged_table(localities)
 ```
-
-```{r covid_regio, echo=FALSE, message=FALSE}
-# paged_table(COVID19Cases_geoRegion_w)
-```
-
-## Contribute
-
-My knowledge of R is extremely limited.  
-I've chunked this document together quickly, and I may have done some ugly things for your R experts taste.
-
-Contributions by someone with more R expertise than myself (likely anyone with R knowledge) are, of course, highly welcome.
