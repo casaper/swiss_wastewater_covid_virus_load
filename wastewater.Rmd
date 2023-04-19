@@ -1,10 +1,13 @@
 ---
 title: "Swiss Covid Wastewater Virus Load Data"
+author: Kaspar V.
+date: 2023-04-19
 output:
   html_document:
     df_print: paged
     toc: true
-    theme: united
+    theme: yeti
+    md_extensions: +footnotes
 ---
 
 ```{r document_setup, echo=FALSE, message=FALSE}
@@ -56,8 +59,6 @@ plot_locality <- function(geoRegion, name, canton, population) {
 
 This document is a personal throw together to get some personal insight into the COVID-19 wastewater virus load data.  
 The original data was published by the Swiss Federal Office of Public Health.
-
-**Date of document generation: 2023-04-19**
 
 - [Covid-⁠19 – Viruslast im Abwasser – Bundesamt für Gesundheit BAG](https://www.covid19.admin.ch/de/epidemiologic/waste-water)
 - [Data source website - opendata.swiss](`r CSVSourceWebsite`)  
