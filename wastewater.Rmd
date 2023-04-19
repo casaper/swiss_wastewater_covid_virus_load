@@ -15,62 +15,73 @@ params:
 
 
 ```{r libs, echo=FALSE, message=FALSE}
-# install.packages(list("readr", "xts", "zoo", "curl", "xml2", "scales", "stringr", "dplyr", "knitr", "rvest"))
-
-library(readr)
+library(rmarkdown)
 library(xts)
-library(zoo)
-library(curl)
-library(xml2)
 library(scales)
 library(stringr)
-library(dplyr)
 library(knitr)
-library(rvest)
-Sys.setenv("VROOM_CONNECTION_SIZE" = 50 * 1024 * 1024)
-CSVModelDocs <- 'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-wastewaterdailyviralloaddata.md'
-CSVSourceWebsite <- 'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/f8602049-4f86-4f02-a957-10791642283a'
-```
+library(tidyverse)
+library(shiny)
+library(dplyr)
 
-```{r get_url, echo=FALSE, message=FALSE}
-html_form_page <- CSVSourceWebsite %>% read_html()
-links <- html_form_page %>% html_elements('a[data-format="CSV"]') %>% html_attr("href")
-csvUrl <- links[1]
+source('lib/load_csv_utils.r')
+source('lib/plot_locality.r')
+
+Sys.setenv("VROOM_CONNECTION_SIZE" = 50 * 1024 * 1024)
+
+COVID19Wastewater_vl_website <-
+  'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/f8602049-4f86-4f02-a957-10791642283a'
+COVID19Wastewater_vl_model <-
+  'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-wastewaterdailyviralloaddata.md'
+
+COVID19Wastewater_vl_website <-
+  'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/f8602049-4f86-4f02-a957-10791642283a'
+COVID19Wastewater_vl_model <-
+  'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-wastewaterdailyviralloaddata.md'
+
+COVID19Cases_geoRegion_w_website <-
+  'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/a92be10d-5e2b-4956-9106-cc27bdf44928'
+COVID19Cases_geoRegion_w_model <-
+  'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-weeklyincomingdata.md'
+
+COVID19Cases_geoRegion_AKL10_w_website <-
+  'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/fa2ac911-a3da-4193-b21b-70d4e9b3f0fe'
+COVID19Cases_geoRegion_AKL10_w_model <-
+  'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-weeklyincomingdata.md'
+
+COVID19Test_geoRegion_w_website <-
+  'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/eaa0b68f-a269-4bb6-9d0d-0a9492f4639c'
+COVID19Test_geoRegion_w_model <-
+  'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-weeklyincomingdata.md'
+
+COVID19Death_geoRegion_w_website <-
+  'https://opendata.swiss/de/dataset/covid-19-schweiz/resource/c9af140c-793a-4d91-bf75-121fee2440ae'
+COVID19Death_geoRegion_w_model <-
+  'https://www.covid19.admin.ch/api/data/documentation/models/sources-definitions-weeklyincomingdata.md'
+
 ```
 
 ```{r load_data, echo=FALSE, message=FALSE}
-# Load the source CSV from remote with readr
-date_col <- col_date(format = "%Y-%m-%d")
-version_col <- col_datetime(format = "%Y-%m-%d_%H-%M-%S")
-data_col_types <-
-  cols(geoRegion = col_character(), date = date_col, version = version_col)
-data_locale <- locale(date_names = "de")
-COVID19Wastewater_vl <-
-  read_csv(csvUrl, col_types = data_col_types, locale = data_locale)
-localities <- COVID19Wastewater_vl %>% distinct(geoRegion,name,canton,pop)
-localities_pop_desc <- localities[order(localities$pop, decreasing=TRUE),]
+
+# COVID19Wastewater_vl_csv <- 'data/COVID19Wastewater_vl.csv'
+COVID19Wastewater_vl_csv <- get_csv_url(COVID19Wastewater_vl_website)
+
+COVID19Wastewater_vl <- load_COVID19Wastewater_vl(COVID19Wastewater_vl_csv)
+localities <- get_localities(COVID19Wastewater_vl)
+
+# COVID19Cases_geoRegion_w <- get_COVID19Cases_geoRegion_w(COVID19Cases_geoRegion_w_website)
+
+# COVID19Death_geoRegion_w <- get_COVID19Death_geoRegion_w(COVID19Death_geoRegion_w_website)
+# COVID19Cases_geoRegion_AKL10_w <- get_COVID19Cases_geoRegion_AKL10_w(COVID19Cases_geoRegion_AKL10_w_website)
+
 ```
 
 
 ```{r plot_functions, echo=FALSE, message=FALSE}
-# create locality time series for geoRegion field
-locality_data_ts = function(geoRegion) {
-  locality_data = COVID19Wastewater_vl[COVID19Wastewater_vl$geoRegion == geoRegion,]
-  return <-
-    xts(locality_data$vl_percentile_mean7d, order.by = locality_data$date)
-}
-
-# Format number of population
-pop_format <- scales::label_comma(accuracy = .1, big.mark = "'", decimal.mark = ".")
-
-plot_locality <- function(geoRegion, name, canton, population) {
-  pop <- pop_format(as.double(population))
-  plot(
-    locality_data_ts(as.character(geoRegion)),
-    main = str_interp("${name} ${canton} – ${pop} Pop."),
-    xlab = 'Date',
-    ylab = 'Percentile mean 7d'
-  )
+plot_locality = function(geoRegion, name, canton, population) {
+  locality_data <- get_locality_data(COVID19Wastewater_vl, geoRegion)
+  plot_main <- str_interp("${name} ${canton} – ${population} Pop.")
+  render_locality_plot(locality_data, plot_main)
 }
 ```
 
@@ -80,9 +91,9 @@ This document is a personal throw together to get some personal insight into the
 The original data was published by the Swiss Federal Office of Public Health.
 
 - [Covid-⁠19 – Viruslast im Abwasser – Bundesamt für Gesundheit BAG](https://www.covid19.admin.ch/de/epidemiologic/waste-water)
-- [Data source website - opendata.swiss](`r CSVSourceWebsite`)  
-- [Data model documentation](`r CSVModelDocs`)
-- [Source document (CSV ~5.5MB)](`r csvUrl`)
+- [Data source website - opendata.swiss](`r COVID19Wastewater_vl_website`)  
+- [Data model documentation](`r COVID19Wastewater_vl_model`)
+- [Source document (CSV ~5.5MB)](`r COVID19Wastewater_vl_csv`)
 - [Source of this document (R Markdown)](https://github.com/casaper/swiss_wastewater_covid_virus_load/blob/main/wastewater.Rmd)
 - Generated at `r params$generate_date`
 
@@ -211,10 +222,12 @@ plot_locality(392101, 'Arosa', 'GR', 2049)
 
 ## Available Localities
 
-Sorted by wastewater facility population reach.
-
 ```{r list_available_localities, echo=FALSE, message=FALSE}
-kable(localities_pop_desc)
+paged_table(localities)
+```
+
+```{r covid_regio, echo=FALSE, message=FALSE}
+# paged_table(COVID19Cases_geoRegion_w)
 ```
 
 ## Contribute
