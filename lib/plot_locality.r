@@ -10,8 +10,6 @@ get_locality_data = function(ww_data, geoRegion) {
   return <- ww_data[ww_data$geoRegion == as.character(geoRegion), ]
 }
 
-
-
 render_locality_plot =
   function(locality_data, plot_main) {
     vl_percentile_mean7d_clean <-
