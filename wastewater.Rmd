@@ -65,7 +65,7 @@ COVID19Death_geoRegion_w_model <-
 # COVID19Wastewater_vl_csv <- 'data/COVID19Wastewater_vl.csv'
 COVID19Wastewater_vl_csv <- get_csv_url(COVID19Wastewater_vl_website)
 
-# COVID19Wastewater_vl <- load_COVID19Wastewater_vl(COVID19Wastewater_vl_csv)
+COVID19Wastewater_vl <- load_COVID19Wastewater_vl(COVID19Wastewater_vl_csv)
 # localities <- get_localities(COVID19Wastewater_vl)
 
 # COVID19Cases_geoRegion_w <- get_COVID19Cases_geoRegion_w(COVID19Cases_geoRegion_w_website)
