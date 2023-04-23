@@ -10,7 +10,6 @@ output:
     output_file: docs/index.html
 params:
   generate_date: '2023-04-19'
-
 ---
 
 
@@ -66,8 +65,8 @@ COVID19Death_geoRegion_w_model <-
 # COVID19Wastewater_vl_csv <- 'data/COVID19Wastewater_vl.csv'
 COVID19Wastewater_vl_csv <- get_csv_url(COVID19Wastewater_vl_website)
 
-COVID19Wastewater_vl <- load_COVID19Wastewater_vl(COVID19Wastewater_vl_csv)
-localities <- get_localities(COVID19Wastewater_vl)
+# COVID19Wastewater_vl <- load_COVID19Wastewater_vl(COVID19Wastewater_vl_csv)
+# localities <- get_localities(COVID19Wastewater_vl)
 
 # COVID19Cases_geoRegion_w <- get_COVID19Cases_geoRegion_w(COVID19Cases_geoRegion_w_website)
 
@@ -98,8 +97,6 @@ The original data was published by the Swiss Federal Office of Public Health.
 - Generated at `r params$generate_date`
 
 ## Wastewater Localities
-
-
 
 ### Werdhölzli ZH – 471'000 Population
 
@@ -819,10 +816,4 @@ plot_locality(58400, 'Lauterbrunnen', 'BE', 2553)
 
 ```{r, echo=FALSE, message=FALSE}
 plot_locality(392101, 'Arosa', 'GR', 2049)
-```
-
-## Available Localities
-
-```{r list_available_localities, echo=FALSE, message=FALSE}
-paged_table(localities)
 ```
