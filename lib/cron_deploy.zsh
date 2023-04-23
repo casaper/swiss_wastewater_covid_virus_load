@@ -14,4 +14,4 @@ git status >> "$working_dir/logging.log" 2>&1
 
 git add --all >> "$working_dir/logging.log" 2>&1
 git commit -m "$(date +%y%m%d-%H%M%S)" >> "$working_dir/logging.log" 2>&1
-git push
+git push >> "$working_dir/logging.log" 2>&1
